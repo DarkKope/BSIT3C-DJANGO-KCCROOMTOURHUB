@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.users',
     'apps.info',
+    'apps.Tour',
+
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bsitcrud',
+        'NAME': 'kccroomtourhub',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
