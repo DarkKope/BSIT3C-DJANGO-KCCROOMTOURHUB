@@ -1,6 +1,13 @@
 from django.contrib import admin
 from .models import Classroom, Tour, TourScene, TourProgress
 
+# Change the admin site header
+admin.site.site_header = "ClassroomTourHub Administration"
+admin.site.site_title = "ClassroomTourHub Admin Portal"
+admin.site.index_title = "Welcome to the Management Dashboard"
+
+# Register your models...
+
 # This creates a nice nested layout in the admin panel
 class TourSceneInline(admin.TabularInline):
     model = TourScene

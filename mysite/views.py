@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.contrib import admin
+from django.urls import path, include
+from apps.Tour import views as tour_views 
 
-def home(request):
-    return render(request, 'index.html')
+# Import your old views (assuming they are in mysite/views.py)
+from . import views as mysite_views 
+
