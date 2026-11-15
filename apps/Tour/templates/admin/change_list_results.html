@@ -1,0 +1,89 @@
+{% load i18n %}
+
+<!-- Hide Django's default table completely -->
+<style>
+    #result_list { display: none !important; }
+</style>
+
+{% if cl.result_list %}
+<style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0A1F44; }
+    ::-webkit-scrollbar-thumb { background: #F2A900; border-radius: 10px; }
+    
+    /* Glass Card Hover Effect */
+    .glass-card {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .glass-card:hover {
+        transform: translateY(-4px) scale(1.005);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 15px rgba(242, 169, 0, 0.1);
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(242, 169, 0, 0.3) !important;
+    }
+    
+    /* Button Animations */
+    .btn-anim {
+        transition: all 0.2s ease;
+    }
+    .btn-anim:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+</style>
+
+<!-- Title of the Section -->
+<h2 style="color: white; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 30px; letter-spacing: 1px; border-left: 4px solid #F2A900; padding-left: 15px;">
+    All {{ cl.opts.verbose_name_plural|title }}
+</h2>
+
+<!-- The Cards Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 10px;">
+    
+    {% for item in cl.result_list %}
+        <div class="glass-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between;">
+            
+            <!-- Data Content -->
+            <div>
+                <!-- Title / Name -->
+                <div style="margin-bottom: 12px; color: #E6F0FA; font-size: 0.95rem; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-door-open" style="color: #F2A900;"></i>
+                    <span style="font-weight: 600; font-size: 1.1rem; color: white;">{{ item.name }}</span>
+                </div>
+
+                <!-- Description / Subject -->
+                <div style="margin-bottom: 12px; color: #E6F0FA; font-size: 0.95rem; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-book" style="color: #9ca3af;"></i>
+                    <span style="color: #9ca3af;">{{ item.subject|default:"No Subject" }}</span>
+                </div>
+
+                <!-- Status -->
+                <div style="margin-bottom: 12px; color: #E6F0FA; font-size: 0.95rem; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-regular fa-circle-check" style="color: #22c55e;"></i>
+                    <span style="color: #9ca3af;">{{ item.get_status_display }}</span>
+                </div>
+
+                <!-- Date -->
+                <div style="margin-bottom: 12px; color: #E6F0FA; font-size: 0.95rem; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-clock" style="color: #9ca3af;"></i>
+                    <span style="color: #9ca3af;">{{ item.updated_at|date:"M d, Y, P" }}</span>
+                </div>
+            </div>
+
+            <!-- Actions Footer -->
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <a href="{% url 'admin:Tour_classroom_change' item.id %}" class="btn-anim" style="background: transparent; color: #F2A900; border: 1px solid #F2A900; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 0.8rem; cursor: pointer; letter-spacing: 1px; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                    <i class="fa-solid fa-pen"></i> EDIT
+                </a>
+                <a href="{% url 'admin:Tour_classroom_delete' item.id %}" class="btn-anim" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 0.8rem; cursor: pointer; letter-spacing: 1px; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                    <i class="fa-solid fa-trash"></i> DELETE
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Include FontAwesome for the icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

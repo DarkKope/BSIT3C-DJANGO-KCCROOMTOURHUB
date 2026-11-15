@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About KCC | KCC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --kcc-blue: #0A1F44; --kcc-gold: #F2A900; --kcc-light-blue: #E6F0FA; --text-light: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--kcc-blue); color: var(--text-light); display: flex; min-height: 100vh; }
+        
+        .sidebar { width: 100px; background-color: rgba(10, 31, 68, 0.95); backdrop-filter: blur(10px); border-right: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; align-items: center; padding-top: 30px; position: fixed; height: 100vh; z-index: 100; }
+        .sidebar-logo { font-size: 1.5rem; color: var(--kcc-gold); margin-bottom: 50px; text-align: center; }
+        .sidebar-menu { list-style: none; width: 100%; padding: 0 10px; }
+        .sidebar-menu li { width: 100%; text-align: center; margin-bottom: 15px; }
+        .sidebar-btn { background: none; border: none; color: var(--kcc-light-blue); font-size: 1.2rem; cursor: pointer; transition: 0.3s; padding: 15px 5px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 5px; text-decoration: none; border-radius: 8px; }
+        .sidebar-btn span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .sidebar-btn:hover, .sidebar-btn.active { color: var(--kcc-blue); background-color: var(--kcc-gold); }
+        .sidebar-btn.active { border-left: 4px solid var(--kcc-light-blue); }
+
+        .main-content { margin-left: 100px; flex-grow: 1; padding: 40px 60px; width: 100%; max-width: 1000px; }
+        .header { border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 20px; margin-bottom: 40px; }
+        .header .logo { font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700; color: var(--kcc-gold); letter-spacing: 2px; }
+
+        .page-title { font-family: 'Oswald', sans-serif; font-size: 3.5rem; text-transform: uppercase; margin-bottom: 30px; line-height: 1.1; }
+        .page-title span { color: var(--kcc-gold); }
+
+        .about-content { background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 40px; border-left: 6px solid var(--kcc-gold); line-height: 1.8; font-size: 1.1rem; color: var(--kcc-light-blue); }
+        .about-content h3 { color: var(--text-light); font-family: 'Oswald', sans-serif; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'dashboard' %}" class="sidebar-btn" title="Home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a href="{% url 'rooms' %}" class="sidebar-btn" title="Rooms"><i class="fa-solid fa-door-open"></i><span>Rooms</span></a></li>
+            <li><a href="{% url 'about' %}" class="sidebar-btn active" title="About KCC"><i class="fa-solid fa-circle-info"></i><span>About</span></a></li>
+            <li style="margin-top: 50px;"><a href="{% url 'landing' %}" class="sidebar-btn text-danger" title="Exit Hub"><i class="fa-solid fa-arrow-left"></i><span>Exit</span></a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="logo">KCC.</div>
+        </div>
+
+        <h1 class="page-title">About <br><span>Kabankalan Catholic College.</span></h1>
+
+        <div class="about-content">
+            {% if school_info %}
+                <h3>{{ school_info.title }}</h3>
+                <div>
+                    {{ school_info.content|linebreaks }}
+                </div>
+            {% else %}
+                <p>School information not yet added. Please update it in the Admin Panel.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

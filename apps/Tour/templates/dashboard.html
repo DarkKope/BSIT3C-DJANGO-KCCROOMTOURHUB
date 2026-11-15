@@ -3,155 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClassroomTourHub | Dashboard</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
+    <title>Dashboard | KCC Room Tour Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Dark Slate Blue */
-            color: #e2e8f0;
-            min-height: 100vh;
+        :root {
+            /* KCC Color Palette */
+            --kcc-blue: #0A1F44; /* Deep Navy Blue */
+            --kcc-gold: #F2A900; /* Gold */
+            --kcc-light-blue: #E6F0FA; /* Light Blue Background */
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --accent-red: #FF2A2A;
         }
-        .navbar {
-            background-color: rgba(15, 23, 42, 0.8) !important;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #1e293b;
-        }
-        .hero-section {
-            padding: 60px 0;
-            text-align: center;
-            background: radial-gradient(circle at 50% -20%, #3b82f6 0%, transparent 50%);
-        }
-        .hero-title {
-            font-weight: 700;
-            font-size: 3rem;
-            background: linear-gradient(to right, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .classroom-card {
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            transition: all 0.3s ease;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--kcc-blue); 
+            color: var(--text-light); 
+            display: flex; 
+            min-height: 100vh; 
             overflow: hidden;
-            height: 100%;
         }
-        .classroom-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
+
+        /* Sidebar */
+        .sidebar { 
+            width: 100px; 
+            background-color: rgba(10, 31, 68, 0.95); /* Semi-transparent blue */
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding-top: 30px; 
+            position: fixed; 
+            height: 100vh; 
+            z-index: 100; 
         }
-        .card-img-placeholder {
-            height: 160px;
-            background: linear-gradient(45deg, #1e293b, #334155);
+        .sidebar-logo { 
+            font-size: 1.5rem; 
+            color: var(--kcc-gold); /* Gold Logo */
+            margin-bottom: 50px; 
+            text-align: center;
+        }
+        .sidebar-menu { list-style: none; width: 100%; padding: 0 10px; }
+        .sidebar-menu li { width: 100%; text-align: center; margin-bottom: 15px; }
+        .sidebar-btn { 
+            background: none; 
+            border: none; 
+            color: var(--kcc-light-blue); 
+            font-size: 1.2rem; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            padding: 15px 5px; 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 5px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+        }
+        .sidebar-btn span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .sidebar-btn:hover, .sidebar-btn.active { color: var(--kcc-blue); background-color: var(--kcc-gold); }
+        .sidebar-btn.active { border-left: 4px solid var(--kcc-light-blue); }
+
+        /* Main Content - Fullscreen Background */
+        .main-content { 
+            margin-left: 100px; 
+            flex-grow: 1; 
+            padding: 40px; 
+            max-width: 1400px; 
+            /* Fullscreen Background Image */
+            background: linear-gradient(rgba(10, 31, 68, 0.8), rgba(10, 31, 68, 0.8)), 
+                        url('https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat;
+            height: 100vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            color: #64748b;
-            font-size: 3rem;
+            position: relative;
         }
-        .badge-subject {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-            font-weight: 600;
+
+        /* Header (Removed Nav Links) */
+        .header { 
+            position: absolute; 
+            top: 40px; 
+            left: 40px;
         }
-        .btn-tour {
-            background-color: #3b82f6;
-            color: white;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.2s;
+        .header .logo { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: var(--kcc-gold); /* Gold KCC logo */
+            letter-spacing: 2px;
         }
-        .btn-tour:hover {
-            background-color: #2563eb;
-            color: white;
-            transform: scale(1.02);
+
+        /* Hero Text */
+        .hero { max-width: 700px; }
+        .hero-title { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 5rem; 
+            line-height: 1.1; 
+            text-transform: uppercase; 
+            margin-bottom: 20px; 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        .hero-title span { color: var(--kcc-gold); } /* Gold highlight */
+        .hero-desc { 
+            color: var(--kcc-light-blue); 
+            font-size: 1.2rem; 
+            max-width: 500px; 
+            line-height: 1.6; 
+            font-weight: 300;
         }
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand text-white fw-bold" href="/">
-                <i class="fa-solid fa-vr-cardboard text-primary me-2"></i> ClassroomTourHub
-            </a>
-            <div class="d-flex">
-                <a href="/admin/" class="btn btn-outline-light btn-sm rounded-pill px-3">
-                    <i class="fa-solid fa-user-shield me-1"></i> Admin Panel
-                </a>
-            </div>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fa-solid fa-graduation-cap"></i>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="container">
-            <h1 class="hero-title mb-3">Explore Virtual Classrooms</h1>
-            <p class="text-secondary lead mx-auto" style="max-width: 600px;">
-                Step inside your classroom from anywhere in the world. Click a room below to start your immersive 360° tour.
-            </p>
-        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'dashboard' %}" class="sidebar-btn active" title="Home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a href="{% url 'rooms' %}" class="sidebar-btn" title="Rooms"><i class="fa-solid fa-door-open"></i><span>Rooms</span></a></li>
+            <li><a href="{% url 'about' %}" class="sidebar-btn" title="About KCC"><i class="fa-solid fa-circle-info"></i><span>About</span></a></li>
+            <li style="margin-top: 50px;"><a href="{% url 'landing' %}" class="sidebar-btn text-danger" title="Exit Hub"><i class="fa-solid fa-arrow-left"></i><span>Exit</span></a></li>
+        </ul>
     </div>
 
-    <!-- Main Content -->
-    <div class="container pb-5">
-        <h4 class="mb-4 fw-bold text-light"><i class="fa-solid fa-door-open me-2 text-primary"></i>Available Classrooms</h4>
-        
-        <div class="row g-4">
-            {% for room in classrooms %}
-            <div class="col-md-6 col-lg-4">
-                <div class="card classroom-card">
-                    <!-- If you add image URLs later, use this: -->
-                    <!-- <img src="{{ room.cover_image_url }}" class="card-img-top" alt="{{ room.name }}"> -->
-                    
-                    <div class="card-img-placeholder">
-                        <i class="fa-solid fa-chalkboard-user"></i>
-                    </div>
-                    
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="card-title fw-bold text-white mb-0">{{ room.name }}</h5>
-                            <span class="badge badge-subject rounded-pill">{{ room.subject|default:"General" }}</span>
-                        </div>
-                        <p class="text-secondary small mb-4">
-                            {{ room.description|default:"No description provided for this classroom." }}
-                        </p>
-                        
-                        {% if room.tours.exists %}
-                            <a href="{% url 'view_room' room.tours.first.id %}" class="btn btn-tour w-100 py-2">
-                                <i class="fa-solid fa-street-view me-2"></i> Enter 360° Tour
-                            </a>
-                        {% else %}
-                            <button class="btn btn-secondary w-100 py-2" disabled>
-                                <i class="fa-solid fa-clock me-2"></i> Tour Coming Soon
-                            </button>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12 text-center py-5">
-                <div class="p-5 rounded-4" style="background-color: #1e293b; border: 1px dashed #334155;">
-                    <i class="fa-solid fa-box-open text-secondary mb-3" style="font-size: 4rem;"></i>
-                    <h4 class="text-white">No classrooms found</h4>
-                    <p class="text-secondary">Head over to the Admin Panel to add your first 360° classroom!</p>
-                    <a href="/admin/" class="btn btn-primary mt-2">Go to Admin Panel</a>
-                </div>
-            </div>
-            {% endfor %}
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- Top Left Logo -->
+        <div class="header">
+            <div class="logo">KCC.</div>
+        </div>
+
+        <!-- Hero Text -->
+        <div class="hero">
+            <h1 class="hero-title">Step Inside<br><span>KCC Digital</span><br>Rooms.</h1>
+            <p class="hero-desc">Immerse yourself in our interactive 360° learning environments. Navigate through the halls of Kabankalan Catholic College from the comfort of your screen.</p>
         </div>
     </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

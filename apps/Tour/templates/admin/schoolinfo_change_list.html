@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content_main %}
+<style>
+    #content > h1:first-child { display: none !important; }
+    .info-card { background: #111; border-radius: 16px; padding: 30px; border: 1px solid #333; box-shadow: 0 4px 15px rgba(0,0,0,0.02); max-width: 600px; margin-bottom: 20px;}
+    .info-card h3 { margin: 0 0 10px 0; color: white; font-size: 1.5rem; font-family: 'Oswald', sans-serif;}
+    .info-card p { color: #aaa; margin-bottom: 20px; }
+    .info-card a { color: #F2A900; font-weight: 600; text-decoration: none; }
+    .add-btn { background: #F2A900; color: #0A1F44; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; }
+</style>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+    <h1 style="font-family: 'Oswald', sans-serif; font-size: 3rem; color: white; margin: 0;">About School</h1>
+    <a href="{% url 'admin:Tour_schoolinfo_add' %}" class="add-btn">+ Add Info</a>
+</div>
+
+{% for info in cl.queryset %}
+<div class="info-card">
+    <h3>{{ info.title }}</h3>
+    <p>{{ info.content|truncatechars:100 }}</p>
+    <a href="{% url 'admin:Tour_schoolinfo_change' info.id %}">Edit this info &rarr;</a>
+</div>
+{% empty %}
+<p style="color: #aaa; font-size: 1.1rem;">No About information added yet. Click "Add Info" to create it.</p>
+{% endfor %}
+
+{% endblock %}

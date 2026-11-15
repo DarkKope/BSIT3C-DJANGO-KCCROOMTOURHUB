@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Rooms | KCC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* KCC Color Palette */
+            --kcc-blue: #0A1F44; 
+            --kcc-gold: #F2A900; 
+            --kcc-light-blue: #E6F0FA; 
+            --text-light: #ffffff;
+            --text-muted: #8898aa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--kcc-blue); 
+            color: var(--text-light); 
+            display: flex; 
+            min-height: 100vh; 
+        }
+
+        /* Sidebar (Same as Dashboard) */
+        .sidebar { 
+            width: 100px; 
+            background-color: rgba(10, 31, 68, 0.95); 
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding-top: 30px; 
+            position: fixed; 
+            height: 100vh; 
+            z-index: 100; 
+        }
+        .sidebar-logo { font-size: 1.5rem; color: var(--kcc-gold); margin-bottom: 50px; text-align: center; }
+        .sidebar-menu { list-style: none; width: 100%; padding: 0 10px; }
+        .sidebar-menu li { width: 100%; text-align: center; margin-bottom: 15px; }
+        .sidebar-btn { 
+            background: none; border: none; color: var(--kcc-light-blue); font-size: 1.2rem; 
+            cursor: pointer; transition: 0.3s; padding: 15px 5px; width: 100%; 
+            display: flex; flex-direction: column; align-items: center; gap: 5px; 
+            text-decoration: none; border-radius: 8px; 
+        }
+        .sidebar-btn span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .sidebar-btn:hover, .sidebar-btn.active { color: var(--kcc-blue); background-color: var(--kcc-gold); }
+        .sidebar-btn.active { border-left: 4px solid var(--kcc-light-blue); }
+
+        /* Main Content */
+        .main-content { 
+            margin-left: 100px; 
+            flex-grow: 1; 
+            padding: 40px 60px; 
+            width: 100%;
+        }
+        
+        .header { 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            padding-bottom: 20px; 
+            margin-bottom: 40px; 
+        }
+        .header .logo { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: var(--kcc-gold); 
+            letter-spacing: 2px;
+        }
+
+        /* Title Area */
+        .page-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            line-height: 1.1;
+        }
+        .page-title span { color: var(--kcc-gold); }
+
+        /* Rooms Grid */
+        .rooms-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 25px; 
+        }
+        
+        .room-card { 
+            background-color: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 12px; 
+            padding: 40px 20px; 
+            text-align: center; 
+            text-decoration: none; 
+            color: var(--text-light); 
+            transition: 0.3s; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 250px; 
+        }
+        
+        .room-card:hover { 
+            background-color: var(--kcc-gold); 
+            transform: translateY(-5px); 
+            border-color: var(--kcc-gold);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .room-card:hover .room-icon, 
+        .room-card:hover .room-name { color: var(--kcc-blue); }
+        
+        .room-icon { 
+            font-size: 3.5rem; 
+            color: var(--kcc-gold); 
+            margin-bottom: 20px; 
+            transition: 0.3s; 
+        }
+        
+        .room-name { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 1.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }
+        
+        .empty-msg { 
+            color: var(--text-muted); 
+            grid-column: 1 / -1; 
+            text-align: center; 
+            padding: 50px; 
+            border: 1px dashed rgba(255, 255, 255, 0.2); 
+            border-radius: 12px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'dashboard' %}" class="sidebar-btn" title="Home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a href="{% url 'rooms' %}" class="sidebar-btn active" title="Rooms"><i class="fa-solid fa-door-open"></i><span>Rooms</span></a></li>
+            <li><a href="{% url 'about' %}" class="sidebar-btn" title="About KCC"><i class="fa-solid fa-circle-info"></i><span>About</span></a></li>
+            <li style="margin-top: 50px;"><a href="{% url 'landing' %}" class="sidebar-btn text-danger" title="Exit Hub"><i class="fa-solid fa-arrow-left"></i><span>Exit</span></a></li>
+        </ul>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="header">
+            <div class="logo">KCC.</div>
+        </div>
+
+        <h1 class="page-title">Explore <br><span>Special Rooms.</span></h1>
+
+        <div class="rooms-grid">
+            {% for room in classrooms %}
+           {% if room.tours.exists %}
+    <!-- If the room has a tour, make it clickable -->
+    <a href="{% url 'view_room' room.tours.first.id %}" class="room-card">
+        <i class="fa-solid fa-chalkboard-user room-icon"></i>
+        <div class="room-name">{{ room.name }}</div>
+    </a>
+{% else %}
+    <!-- If the room has no tour, show a disabled card -->
+    <div class="room-card" style="opacity: 0.5; cursor: not-allowed;">
+        <i class="fa-solid fa-lock room-icon"></i>
+        <div class="room-name">{{ room.name }}</div>
+        <small style="color: #6b7280; margin-top: 10px;">No tour added yet</small>
+    </div>
+{% endif %}
+            {% empty %}
+            <div class="empty-msg">No rooms available. Please add classrooms in the Admin Panel.</div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

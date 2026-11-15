@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static admin_list %}
+
+{% block content_main %}
+    <!-- Top Action Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h1 style="font-family: 'Oswald', sans-serif; color: white; font-size: 2.5rem; margin: 0; letter-spacing: 1px;">
+            Manage {{ cl.opts.verbose_name_plural|title }}
+        </h1>
+        
+        {% if has_add_permission %}
+        <div class="object-tools" style="margin: 0;">
+            <a href="add/" style="background: #F2A900; color: #0A1F44; padding: 12px 28px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(242, 169, 0, 0.3); transition: 0.3s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <i class="fa-solid fa-plus" style="margin-right: 8px;"></i> Add {{ cl.opts.verbose_name|title }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- The Card Grid Container -->
+    <div id="changelist" style="background: transparent;">
+        <form id="changelist-form" method="post" novalidate>
+            {% csrf_token %}
+            {% result_list cl %}
+        </form>
+    </div>
+{% endblock %}

@@ -1,13 +1,11 @@
 from pathlib import Path
-import sys
-import copy
-from django.template.context import BaseContext
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-whatever-your-key-is'
+SECRET_KEY = 'django-insecure-kcc-room-tour-hub-2026'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -16,14 +14,14 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    'apps.Tour',                  # MUST BE ABOVE ADMIN
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.Tour',  # Your new app
-    'apps.users', # Your old app
+    'apps.users',
 ]
 
 MIDDLEWARE = [
@@ -44,19 +42,19 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+    'context_processors': [
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+    ],
+},
     },
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-# Database (XAMPP MySQL)
+# Database (Switched to SQLite to bypass XAMPP MariaDB errors)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -79,11 +77,14 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
+import os
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ==========================================
-# PUT THE WORKAROUND HERE AT THE VERY BOTTOM
-# ==========================================
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

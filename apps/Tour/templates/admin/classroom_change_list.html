@@ -1,0 +1,87 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body { background-color: #f8f9fa !important; font-family: 'Inter', sans-serif !important; margin: 0; padding: 0; }
+    #header, #branding, #user-tools, .breadcrumbs { display: none !important; }
+    #container { display: flex !important; min-height: 100vh; padding: 0 !important; margin: 0 !important; width: 100vw !important; max-width: 100vw !important; }
+    #content { flex-grow: 1; padding: 0 !important; margin: 0 !important; width: 100%; display: flex; flex-direction: column; }
+
+    .custom-sidebar { width: 260px; background-color: #ffffff; border-right: 1px solid #e5e7eb; display: flex; flex-direction: column; padding: 30px 20px; height: 100vh; position: sticky; top: 0; box-shadow: 2px 0 10px rgba(0,0,0,0.02); z-index: 10; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 5px; margin-top: 20px; }
+    .nav-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 8px; color: #4b5563; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; }
+    .nav-item i { width: 20px; text-align: center; font-size: 1.1rem; color: #9ca3af; }
+    .nav-item:hover { background-color: #f3f4f6; color: #111827; }
+    .nav-item:hover i { color: #d97706; }
+    .nav-item.active { background-color: #fefce8; color: #92400e; font-weight: 600; }
+    .nav-item.active i { color: #d97706; }
+
+    .top-bar { background: #ffffff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e7eb; width: 100%; box-sizing: border-box; }
+    .logo-left { font-size: 1.5rem; font-weight: 800; color: #111827; display: flex; align-items: center; gap: 10px; }
+    .logout-right { color: #ef4444; text-decoration: none; font-weight: 600; background: #fef2f2; padding: 10px 20px; border-radius: 8px; border: 1px solid #fee2e2; transition: 0.2s; }
+
+    .main-wrapper { padding: 40px; width: 100%; box-sizing: border-box; }
+    .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .list-header h1 { font-size: 2rem; font-weight: 700; color: #111827; margin: 0; }
+    .add-btn { background: #FDE68A; color: #92400e; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; border: 1px solid #FCD34D; }
+    .add-btn:hover { background: #FCD34D; }
+
+    .rooms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+    .room-card { background: #fff; border-radius: 16px; padding: 30px; border: 1px solid #e5e7eb; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+    .room-title { font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 5px; }
+    .room-meta { font-size: 0.9rem; color: #6b7280; margin-bottom: 15px; }
+    .room-status { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #dcfce7; color: #166534; margin-bottom: 20px; width: max-content; }
+    .room-actions { margin-top: auto; }
+    .room-actions a { color: #d97706; font-weight: 600; text-decoration: none; }
+
+    #changelist { display: none !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="display: flex; width: 100vw; min-height: 100vh; background: #f8f9fa;">
+       <!-- SIDEBAR -->
+    <div class="custom-sidebar">
+        <div class="sidebar-nav">
+            <a href="{% url 'admin:index' %}" class="nav-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="{% url 'admin:Tour_classroom_changelist' %}" class="nav-item"><i class="fa-solid fa-door-open"></i> Rooms</a>
+            <a href="{% url 'admin:Tour_tour_changelist' %}" class="nav-item"><i class="fa-solid fa-map"></i> Tours</a>
+            <a href="{% url 'admin:Tour_tourscene_changelist' %}" class="nav-item"><i class="fa-solid fa-image"></i> Tour Scenes</a>
+            <a href="{% url 'admin:Tour_schoolinfo_changelist' %}" class="nav-item"><i class="fa-solid fa-school"></i> About School</a>
+        </div>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column;">
+        <div class="top-bar">
+            <div class="logo-left"><i class="fa-solid fa-graduation-cap" style="color: #d97706;"></i> KCC Admin</div>
+            <a href="/admin/logout/" class="logout-right"><i class="fa-solid fa-power-off"></i> Logout</a>
+        </div>
+
+        <div class="main-wrapper">
+            <div class="list-header">
+                <h1>Rooms Added</h1>
+                <a href="{% url 'admin:Tour_classroom_add' %}" class="add-btn"><i class="fa-solid fa-plus"></i> Add Room</a>
+            </div>
+
+            <div class="rooms-grid">
+                {% for room in cl.queryset %}
+                <div class="room-card">
+                    <div class="room-title">{{ room.name }}</div>
+                    <div class="room-meta">{{ room.subject|default:"No Subject" }} | {{ room.grade_level|default:"No Grade" }}</div>
+                    <div class="room-status">{{ room.get_status_display }}</div>
+                    <div class="room-actions">
+                        <a href="{% url 'admin:Tour_classroom_change' room.id %}">Edit Room &rarr;</a>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: #6b7280; font-size: 1.1rem;">No rooms have been added yet. Click "Add Room" to create one.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content_main %}
+    <h1>{% if add %}Add{% else %}Change{% endif %} {{ opts.verbose_name|title }}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            {% if errors %}<p style="color:#ff6b6b; font-weight:600;">Please correct the errors below.</p>{% endif %}
+            
+            {% for fieldset in adminform %}
+                {% for line in fieldset %}
+                    {% for field in line %}
+                        <div class="form-row">
+                            {{ field.label_tag }}
+                            {{ field.field }}
+                            {% if field.help_text %}<div class="help" style="font-size: 0.8rem; color: #aaa; margin-top: 5px;">{{ field.help_text }}</div>{% endif %}
+                            {{ field.errors }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="submit-row" style="display:flex; gap:15px; margin-top: 30px;">
+            <input type="submit" value="Save" class="default" name="_save">
+            <input type="submit" value="Save and add another" name="_addanother">
+            <input type="submit" value="Save and continue editing" name="_continue">
+        </div>
+    </form>
+{% endblock %}

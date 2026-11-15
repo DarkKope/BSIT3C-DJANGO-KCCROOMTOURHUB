@@ -1,0 +1,160 @@
+/* =========================================
+   GLOBAL FIX: Hide Django's default page titles
+   ========================================= */
+#content > h1:first-child, 
+#content-main > h1:first-child,
+.dashboard h1:first-child { 
+    display: none !important; 
+}
+
+/* =========================================
+   KCC ADMIN GLOBAL DARK THEME
+   ========================================= */
+body, #container, #content, .main-layout { 
+    background-color: #0A1F44 !important; 
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+h1, h2, h3 { 
+    font-family: 'Oswald', sans-serif !important; 
+    color: #ffffff !important; 
+}
+
+a { color: #F2A900 !important; text-decoration: none; transition: 0.2s; }
+a:hover { color: #ffffff !important; }
+
+/* =========================================
+   FORCE TABLE DESIGN (THE EXACT FIX)
+   ========================================= */
+#changelist { background: transparent !important; padding: 0 !important; }
+#changelist .results { background: transparent !important; }
+
+#result_list { 
+    width: 100% !important; 
+    border-collapse: separate !important; 
+    border-spacing: 0 15px !important; /* Space between rows */
+    background: transparent !important; 
+    border: none !important;
+}
+
+/* Force Header (No White Background) */
+#changelist table thead th, 
+#result_list thead th {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #F2A900 !important;
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 1.5px !important; 
+    text-transform: uppercase !important;
+    padding: 10px 20px !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(242, 169, 0, 0.3) !important;
+    text-align: left !important;
+}
+#changelist table thead th a { color: #F2A900 !important; text-decoration: none !important; }
+
+/* Force Rows (Glassmorphism) */
+#changelist table tbody tr,
+#result_list tbody tr {
+    background: rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+/* Force Cells (No Background) */
+#changelist table tbody td,
+#result_list tbody td {
+    padding: 20px !important;
+    color: #ffffff !important; 
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    vertical-align: middle;
+    font-size: 0.95rem;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Row Link Colors */
+#result_list tbody td a { color: #F2A900 !important; font-weight: 600 !important; }
+#result_list tbody td a:hover { color: #ffffff !important; }
+
+/* Rounded Corners & Hover */
+#result_list tbody td:first-child { 
+    border-top-left-radius: 12px !important; 
+    border-bottom-left-radius: 12px !important; 
+    border-left: 3px solid transparent !important; 
+}
+#result_list tbody td:last-child { 
+    border-top-right-radius: 12px !important; 
+    border-bottom-right-radius: 12px !important; 
+}
+
+#result_list tbody tr:hover { 
+    background: rgba(255, 255, 255, 0.1) !important; 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+#result_list tbody tr:hover td:first-child { 
+    border-left: 3px solid #F2A900 !important; 
+}
+
+/* =========================================
+   BUTTONS (Pill Shapes)
+   ========================================= */
+.action-btn {
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    margin-left: 8px;
+}
+
+.btn-change {
+    background: transparent;
+    color: #F2A900;
+    border: 1px solid #F2A900;
+}
+.btn-change:hover {
+    background: #F2A900;
+    color: #0A1F44;
+    box-shadow: 0 4px 10px rgba(242, 169, 0, 0.3);
+}
+
+.btn-delete {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+.btn-delete:hover {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+}
+
+/* Add Button */
+.object-tools a {
+    background: #F2A900 !important;
+    color: #0A1F44 !important;
+    padding: 12px 28px !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(242, 169, 0, 0.2);
+    transition: 0.3s ease;
+}
+.object-tools a:hover { 
+    background: #ffffff !important; 
+    transform: translateY(-2px);
+}
